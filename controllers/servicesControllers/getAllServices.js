@@ -1,0 +1,44 @@
+const Service = require("../../db/models/servicesModel");
+
+const getAllServices = async (req, res) => {
+  const { page = 1, limit = 12 } = req.query;
+
+  const skip = (page - 1) * limit;
+  const queryBody = {};
+
+  const services = await Service.find(queryBody, "", {
+    skip,
+    limit,
+  });
+
+  if (!services.length) {
+    return res.json({
+      status: "success",
+      code: 200,
+      message: "No data found",
+    });
+  }
+
+  const filterKeysServices = services.map((service) => {
+    return {
+      id: service._id,
+      title: service.title,
+      place: service.place,
+      price: service.price,
+    };
+  });
+
+  res.json({
+    status: "success",
+    code: 200,
+    data: {
+      services: filterKeysServices,
+      pagination: {
+        page,
+        limit,
+      },
+    },
+  });
+};
+
+module.exports = getAllServices;
