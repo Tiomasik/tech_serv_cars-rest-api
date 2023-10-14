@@ -21,6 +21,10 @@ const servicesSchema = new Schema(
     price: {
       type: Number,
     },
+    imageURL: {
+      type: String,
+      default: "",
+    },
   },
   { versionKey: false, timestamps: true }
 );
