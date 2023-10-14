@@ -25,6 +25,7 @@ const getAllServices = async (req, res) => {
       title: service.title,
       place: service.place,
       price: service.price,
+      imageURL: service.imageURL,
     };
   });
 
