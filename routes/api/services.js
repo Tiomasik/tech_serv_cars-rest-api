@@ -3,16 +3,17 @@ const router = express.Router();
 
 const asyncWrapper = require("../../helpers/asyncWrapper");
 const uploadService = require("../../middlewares/uploadService");
-const validatorService = require("../../middlewares/validatorService");
 const validateImage = require("../../middlewares/validateImage");
 const ctrServices = require("../../controllers/servicesControllers");
+const validation = require("../../middlewares/validation");
+const schema = require("../../schemas");
 
 router.get("/", asyncWrapper(ctrServices.getAllServices));
 router.post(
   "/user",
   validateImage,
   uploadService.single("imageURL"),
-  validatorService(),
+  validation(schema.serviceSchema),
   asyncWrapper(ctrServices.addService)
 );
 

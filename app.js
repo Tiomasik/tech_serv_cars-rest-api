@@ -3,6 +3,7 @@ const logger = require("morgan");
 const cors = require("cors");
 
 const servicesRouter = require("./routes/api/services");
+const authRouter = require("./routes/api/auth");
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.use(express.json());
 app.use(express.static("public"));
 
 app.use("/services", servicesRouter);
+app.use("/auth", authRouter);
 
 app.use((__, res) => {
   res.status(404).json({ message: "Not found" });
@@ -21,7 +23,6 @@ app.use((__, res) => {
 
 app.use((err, __, res, ___) => {
   const { status = 500, message = "Server error" } = err;
-  console.log(err);
   res.status(status).json({ message });
 });
 

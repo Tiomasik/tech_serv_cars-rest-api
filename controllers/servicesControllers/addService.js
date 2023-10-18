@@ -1,4 +1,4 @@
-const Service = require("../../db/models/servicesModel");
+const Service = require("../../db/models/services");
 const fs = require("fs/promises");
 const path = require("path");
 

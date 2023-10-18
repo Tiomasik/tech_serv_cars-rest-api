@@ -1,4 +1,4 @@
-const Service = require("../../db/models/servicesModel");
+const Service = require("../../db/models/services");
 
 const getAllServices = async (req, res) => {
   const { page = 1, limit = 12 } = req.query;
