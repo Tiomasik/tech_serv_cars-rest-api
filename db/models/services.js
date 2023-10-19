@@ -25,6 +25,10 @@ const servicesSchema = new Schema(
       type: String,
       default: "",
     },
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: "user",
+    },
   },
   { versionKey: false, timestamps: true }
 );

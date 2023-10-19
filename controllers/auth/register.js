@@ -13,7 +13,7 @@ const register = async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
   if (user) {
-    httpError(res, 409, `Email or password is wrong`);
+    httpError(res, 409, `Email already exists`);
   }
   // const avatarURL = gravatar.url(email);
   const hashPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10));

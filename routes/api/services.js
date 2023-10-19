@@ -7,10 +7,12 @@ const validateImage = require("../../middlewares/validateImage");
 const ctrServices = require("../../controllers/servicesControllers");
 const validation = require("../../middlewares/validation");
 const schema = require("../../schemas");
+const { authenticate } = require("../../middlewares");
 
-router.get("/", asyncWrapper(ctrServices.getAllServices));
+router.get("/", authenticate, asyncWrapper(ctrServices.getAllServices));
 router.post(
   "/user",
+  authenticate,
   validateImage,
   uploadService.single("imageURL"),
   validation(schema.serviceSchema),
