@@ -9,7 +9,8 @@ const validation = require("../../middlewares/validation");
 const schema = require("../../schemas");
 const { authenticate } = require("../../middlewares");
 
-router.get("/", authenticate, asyncWrapper(ctrServices.getAllServices));
+router.get("/", asyncWrapper(ctrServices.getAllServices));
+router.get("/:serviceId", asyncWrapper(ctrServices.getServiceById));
 router.post(
   "/user",
   authenticate,

@@ -20,6 +20,9 @@ const authenticate = async (req, res, next) => {
     if (!user) {
       return httpError(res, 401, `User does not exist`);
     }
+    if (!user.token || user.token !== token) {
+      return httpError(res, 401, `User is not authorise`);
+    }
     req.user = user;
     next();
   } catch {
