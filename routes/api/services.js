@@ -7,17 +7,34 @@ const validateImage = require("../../middlewares/validateImage");
 const ctrServices = require("../../controllers/servicesControllers");
 const validation = require("../../middlewares/validation");
 const schema = require("../../schemas");
-const { authenticate } = require("../../middlewares");
+const { authenticateAdmin } = require("../../middlewares");
 
 router.get("/", asyncWrapper(ctrServices.getAllServices));
+
 router.get("/:serviceId", asyncWrapper(ctrServices.getServiceById));
+
 router.post(
-  "/user",
-  authenticate,
+  "/admin",
+  authenticateAdmin,
   validateImage,
   uploadService.single("imageURL"),
   validation(schema.serviceSchema),
   asyncWrapper(ctrServices.addService)
+);
+
+router.put(
+  "/admin/:serviceId",
+  authenticateAdmin,
+  validateImage,
+  uploadService.single("imageURL"),
+  validation(schema.serviceSchema),
+  asyncWrapper(ctrServices.updateService)
+);
+
+router.delete(
+  "/admin/:serviceId",
+  authenticateAdmin,
+  asyncWrapper(ctrServices.deleteService)
 );
 
 module.exports = router;
