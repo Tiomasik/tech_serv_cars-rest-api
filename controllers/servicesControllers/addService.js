@@ -5,7 +5,7 @@ const path = require("path");
 const configCloudinary = require("./configCloudinary");
 
 const addService = async (req, res) => {
-  const { _id: owner } = req.user;
+  const { _id: owner } = req.admin;
   const { path: tmpUpload, originalname } = req.file;
   const titleArray = req.body.title.toLowerCase().split(" ");
   const fileName = `${originalname}`;
@@ -26,9 +26,7 @@ const addService = async (req, res) => {
     status: "success",
     code: 201,
     data: {
-      service: {
-        service,
-      },
+      service,
     },
   });
 };

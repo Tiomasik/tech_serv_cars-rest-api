@@ -3,10 +3,11 @@ const Service = require("../../db/models/services");
 const getAllServices = async (req, res) => {
   const { page = 1, limit = 12 } = req.query;
 
-  const { _id: owner } = req.user;
+  // const { _id: owner } = req.user;
+  // const queryBody = { owner };
 
   const skip = (page - 1) * limit;
-  const queryBody = { owner };
+  const queryBody = {};
 
   const services = await Service.find(queryBody, "", {
     skip,
