@@ -14,12 +14,16 @@ const userSchema = new Schema(
       minlength: 6,
       required: [true, "Password is required"],
     },
-    // name: {
-    //   type: String,
-    //   minlength: 3,
-    //   maxlength: 20,
-    //   default: "",
-    // },
+    name: {
+      type: String,
+      minlength: 3,
+      maxlength: 20,
+      default: "",
+    },
+    imageURL: {
+      type: String,
+      default: "",
+    },
     // phone: {
     //   type: String,
     //   maxlength: 13,

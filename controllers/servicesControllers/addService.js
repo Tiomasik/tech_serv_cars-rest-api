@@ -1,11 +1,15 @@
 const Service = require("../../db/models/services");
 const fs = require("fs/promises");
 const path = require("path");
+const httpError = require("../../helpers/httpError");
 
 const configCloudinary = require("./configCloudinary");
 
 const addService = async (req, res) => {
   const { _id: owner } = req.admin;
+  if (!req.file) {
+    return httpError(res, 400, `Image of service is required`);
+  }
   const { path: tmpUpload, originalname } = req.file;
   const titleArray = req.body.title.toLowerCase().split(" ");
   const fileName = `${originalname}`;

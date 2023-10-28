@@ -1,16 +1,16 @@
-const Service = require("../../db/models/services");
+const User = require("../../db/models/user");
 const fs = require("fs/promises");
 const path = require("path");
 
-const configCloudinary = require("./configCloudinary");
+const configCloudinary = require("../servicesControllers/configCloudinary");
 const httpError = require("../../helpers/httpError");
 
-const updateService = async (req, res, next) => {
-  const { serviceId: _id } = req.params;
+const updateUser = async (req, res, next) => {
+  const { _id } = req.user;
 
   let url = "";
-  const serviceId = await Service.findById(_id);
-  url = serviceId.imageURL;
+  const userId = await User.findById(_id);
+  url = userId.imageURL;
 
   if (req.file) {
     const { path: tmpUpload, originalname } = req.file;
@@ -24,7 +24,7 @@ const updateService = async (req, res, next) => {
     await fs.unlink(resultUpload);
     url = result.url;
   }
-  const service = await Service.findByIdAndUpdate(
+  const user = await User.findByIdAndUpdate(
     { _id },
     { ...req.body, imageURL: url },
     {
@@ -32,7 +32,7 @@ const updateService = async (req, res, next) => {
     }
   );
 
-  if (service.length === 0) {
+  if (user.length === 0) {
     return next(httpError(404, `Service with id=${_id} is not found`));
   }
 
@@ -40,15 +40,13 @@ const updateService = async (req, res, next) => {
     status: "success",
     code: 200,
     data: {
-      service: {
-        title: service.title,
-        place: service.place,
-        imageURL: service.imageURL,
-        comments: service.comments,
-        price: service.price,
+      user: {
+        name: user.name,
+        email: user.email,
+        imageURL: user.imageURL,
       },
     },
   });
 };
 
-module.exports = updateService;
+module.exports = updateUser;

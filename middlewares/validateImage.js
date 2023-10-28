@@ -1,21 +1,24 @@
-const formidable = require('formidable');
-const fs = require('fs/promises');
-const path = require('path');
+const formidable = require("formidable");
+const fs = require("fs/promises");
+const path = require("path");
 
-const httpError = require('../helpers/httpError');
-const tmpDir = require('../path');
+const httpError = require("../helpers/httpError");
+const tmpDir = require("../path");
 
 const validateImage = (req, res, next) => {
   const form = formidable();
   form.parse(req, (__, field, file) => {
+    if (!file.imageURL) {
+      return;
+    }
     const type = [
-      'image/jpg',
-      'image/jpeg',
-      'image/png',
-      'image/bmp',
-      'image/gif',
-      'image/tif',
-      'image/tiff',
+      "image/jpg",
+      "image/jpeg",
+      "image/png",
+      "image/bmp",
+      "image/gif",
+      "image/tif",
+      "image/tiff",
     ];
     const resultUpload = path.join(tmpDir, file.imageURL.originalFilename);
 
@@ -23,6 +26,7 @@ const validateImage = (req, res, next) => {
       fs.unlink(resultUpload);
       return next(
         httpError(
+          res,
           400,
           `Incorrect image format! Please upload the file in the following format ('.jpg','.jpeg','.png','.bmp','.gif','.tif','.tiff')`
         )
@@ -33,6 +37,7 @@ const validateImage = (req, res, next) => {
       fs.unlink(resultUpload);
       return next(
         httpError(
+          res,
           400,
           `Image size too large! Image size must be less than 5MB.')`
         )
