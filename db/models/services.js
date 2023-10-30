@@ -24,7 +24,7 @@ const servicesSchema = new Schema(
     imageURL: {
       type: String,
       default: "",
-      required: true,
+      // required: true,
     },
     owner: {
       type: Schema.Types.ObjectId,
