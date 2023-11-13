@@ -11,7 +11,7 @@ const authenticateAdmin = async (req, res, next) => {
   const [bearer, token] = authorization.split(" ");
 
   if (bearer !== "Bearer") {
-    return next(httpError(res, 401, `Admin is not authorise`));
+    return next(httpError(res, 401, `Admin is not authorise 'Bearer'`));
   }
 
   try {
@@ -21,12 +21,12 @@ const authenticateAdmin = async (req, res, next) => {
       return httpError(res, 401, `Admin does not exist`);
     }
     if (!admin.token || admin.token !== token) {
-      return httpError(res, 401, `Admin is not authorise`);
+      return httpError(res, 401, `Admin is not authorise 'token'`);
     }
     req.admin = admin;
     next();
   } catch {
-    return next(httpError(res, 401, `Admin is not authorise`));
+    return next(httpError(res, 401, `Admin is not authorise 'catch'`));
   }
 };
 
